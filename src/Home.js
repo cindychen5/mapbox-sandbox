@@ -1,6 +1,7 @@
 import React from "react"
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, {Marker} from 'react-map-gl';
 import {Container} from "reactstrap";
+import {Pin} from "./Pin";
 
 export function Home() {
     const [points, setPoints] = React.useState([
@@ -14,7 +15,7 @@ export function Home() {
     const [viewport, setViewport] = React.useState({
         latitude: 35.33,
         longitude: -106.65,
-        zoom: 5
+        zoom: 12
     });
 
     return (
@@ -28,9 +29,10 @@ export function Home() {
                     onViewportChange={(viewport) => setViewport(viewport)}
                     mapStyle="mapbox://styles/mapbox/dark-v9"
                     mapboxApiAccessToken={"pk.eyJ1IjoiY2ljaGVuNTgiLCJhIjoiY2ttM25wOWdsMTQxNzJxcXRlZDYxcm5saSJ9.wdnJVaMM3kOfsCuMeoB-vA"}
-                />
-
-            </Container>
+                >
+                {points.map((point, index) => <Pin lat={point.lat} lng={point.lng} index={index} key={index}/>)}
+                </ReactMapGL>
+                </Container>
 
         </>
     )
