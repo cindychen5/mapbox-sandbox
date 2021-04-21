@@ -1,38 +1,32 @@
-import React from "react"
-import ReactMapGL, {Marker} from 'react-map-gl';
+import React, {useState} from "react"
+import ReactMapGL from 'react-map-gl';
 import {Container} from "reactstrap";
 import {Pin} from "./Pin";
+import Geocoder from "react-mapbox-gl-geocoder";
 
-export function Home() {
-    const [points, setPoints] = React.useState([
-        {lat: 35.332, lng: -106.652},
-        {lat: 35.339, lng: -106.656},
-        {lat: 35.40, lng: -106.666},
-        {lat: 35.23, lng: -106.4444}
-    ]);
-    // center={[-106.65, 35.33]}
-
-    const [viewport, setViewport] = React.useState({
-        latitude: 35.33,
-        longitude: -106.65,
+export default function Home() {
+    const [viewport, setViewport] = useState({
+        latitude: 35.107871,
+        longitude: -106.690982,
+        width: "80vw",
+        height: "80vh",
         zoom: 12
-    });
+    })
 
     return (
         <>
-            <Container>
-                <h1>Here is the map</h1>
+
+                <h1>MAP!</h1>
                 <ReactMapGL
                     {...viewport}
-                    width="80vw"
-                    height="100vh"
-                    onViewportChange={(viewport) => setViewport(viewport)}
-                    mapStyle="mapbox://styles/mapbox/dark-v9"
-                    mapboxApiAccessToken={"pk.eyJ1IjoiY2ljaGVuNTgiLCJhIjoiY2ttM25wOWdsMTQxNzJxcXRlZDYxcm5saSJ9.wdnJVaMM3kOfsCuMeoB-vA"}
-                >
-                {points.map((point, index) => <Pin lat={point.lat} lng={point.lng} index={index} key={index}/>)}
+                    mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+                    onViewportChange={viewport => {
+                        setViewport(viewport);
+                    }}
+                    >
+
                 </ReactMapGL>
-                </Container>
+
 
         </>
     )
