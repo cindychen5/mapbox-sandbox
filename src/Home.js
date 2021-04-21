@@ -1,8 +1,8 @@
 import React, {useState} from "react"
-import ReactMapGL from 'react-map-gl';
-import {Container} from "reactstrap";
-import {Pin} from "./Pin";
+import ReactMapGL, {Marker} from 'react-map-gl';
 import Geocoder from "react-mapbox-gl-geocoder";
+import * as stateCapitalData from './stateCapitals.json';
+import {Pin} from "./Pin";
 
 export default function Home() {
     const [viewport, setViewport] = useState({
@@ -16,9 +16,11 @@ export default function Home() {
         // zoom: 12
     })
 
+    const statesInfo = stateCapitalData.states;
+
+
     return (
         <>
-
                 <h1>MAP!</h1>
                 <ReactMapGL
                     {...viewport}
@@ -27,8 +29,12 @@ export default function Home() {
                     onViewportChange={viewport => {
                         setViewport(viewport);
                     }}
-
                     >
+                    {statesInfo.map((capital, index) => (
+                        <Pin key={index} lng={Number(capital.long)} lat={Number(capital.lat)}>
+                        </Pin>
+                        ))}
+
 
                 </ReactMapGL>
 
