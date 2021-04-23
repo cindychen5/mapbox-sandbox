@@ -1,29 +1,40 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import ReactMapGL, {Marker, Popup} from 'react-map-gl';
 import * as stateCapitalData from './stateCapitals.json';
 import './index.css';
 import starIcon from './star-shape-in-a-circle.svg';
-// import {Pin} from "./Pin";
 
 export default function Home() {
     const [viewport, setViewport] = useState({
-        // latitude: 35.107871,
-        // longitude: -106.690982,
         latitude: 40,
         longitude: -100,
         zoom: 3,
         width: "80vw",
         height: "80vh",
-        // zoom: 12
     })
 
     const statesInfo = stateCapitalData.states;
     const [selectedCapital, setSelectedCapital] = useState(null);
 
+    //first time it renders it'll call the effect
+    //if esc button is pressed, it'll set it to disappear
+    useEffect(() => {
+        const listener = (e) => {
+            if(e.key === "Escape") {
+                setSelectedCapital(null);
+            }
+        };
+        window.addEventListener("keydown", listener);
+
+        return () => {
+            window.removeEventListener("keydown", listener);
+        }
+    }, [])
+
 
     return (
         <>
-                <h1>MAP!</h1>
+                <h1>Map of US States & Capitals</h1>
                 <ReactMapGL
                     {...viewport}
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
@@ -65,25 +76,6 @@ export default function Home() {
                             </div>
                         </Popup>
                     ) : null}
-
-                    {/*{statesInfo.map((capital, index) => (*/}
-                    {/*    <Pin*/}
-                    {/*        key={index}*/}
-                    {/*        lng={Number(capital.long)}*/}
-                    {/*        lat={Number(capital.lat)}*/}
-                    {/*        onClick={setSelectedCapital}*/}
-                    {/*    />*/}
-                    {/*    ))*/}
-                    {/*}*/}
-
-                    {/*{selectedCapital ? (*/}
-                    {/*    <Popup*/}
-                    {/*        longitude={Number(selectedCapital.long)}*/}
-                    {/*        latitude={Number(selectedCapital.lat)}*/}
-                    {/*    >*/}
-                    {/*    <div>capital</div>*/}
-                    {/*    </Popup>*/}
-                    {/*) : null}*/}
 
                 </ReactMapGL>
 
