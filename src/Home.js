@@ -41,16 +41,30 @@ export default function Home() {
                         latitude={Number(capital.lat)}
                         >
                         <button
-                            class="marker-btn"
-                            // onClick={e => {
-                            //     e.preventDefault();
-                            //     setSelectedCapital(capital);
-                            // }}
+                            className="marker-btn"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedCapital(capital);
+                            }}
                             >
                             <img src={starIcon} alt="Capitals Icon"/>
                         </button>
                     </Marker>
                     ))}
+
+                    {selectedCapital ? (
+                        <Popup
+                            latitude={Number(selectedCapital.lat)}
+                            longitude={Number(selectedCapital.long)}
+                            onClose={() => {
+                                setSelectedCapital(null);
+                            }}
+                        >
+                            <div>
+                                <h6>{selectedCapital.capital}, {selectedCapital.abbr}</h6>
+                            </div>
+                        </Popup>
+                    ) : null}
 
                     {/*{statesInfo.map((capital, index) => (*/}
                     {/*    <Pin*/}
