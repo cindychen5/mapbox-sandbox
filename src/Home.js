@@ -1,8 +1,7 @@
 import React, {useState} from "react"
-import ReactMapGL, {Marker} from 'react-map-gl';
-import Geocoder from "react-mapbox-gl-geocoder";
+import ReactMapGL, {Marker, Popup} from 'react-map-gl';
 import * as stateCapitalData from './stateCapitals.json';
-import {Pin} from "./Pin";
+// import {Pin} from "./Pin";
 
 export default function Home() {
     const [viewport, setViewport] = useState({
@@ -17,6 +16,7 @@ export default function Home() {
     })
 
     const statesInfo = stateCapitalData.states;
+    const [selectedCapital, setSelectedCapital] = useState(null);
 
 
     return (
@@ -30,11 +30,36 @@ export default function Home() {
                         setViewport(viewport);
                     }}
                     >
-                    {statesInfo.map((capital, index) => (
-                        <Pin key={index} lng={Number(capital.long)} lat={Number(capital.lat)}>
-                        </Pin>
-                        ))}
 
+                    {/*Adding pins*/}
+                    {statesInfo.map((capital, index) => (
+                    <Marker
+                        key={index}
+                        longitude={Number(capital.long)}
+                        latitude={Number(capital.lat)}
+                        >
+                        <div>states</div>
+                    </Marker>
+                    ))}
+
+                    {/*{statesInfo.map((capital, index) => (*/}
+                    {/*    <Pin*/}
+                    {/*        key={index}*/}
+                    {/*        lng={Number(capital.long)}*/}
+                    {/*        lat={Number(capital.lat)}*/}
+                    {/*        onClick={setSelectedCapital}*/}
+                    {/*    />*/}
+                    {/*    ))*/}
+                    {/*}*/}
+
+                    {/*{selectedCapital ? (*/}
+                    {/*    <Popup*/}
+                    {/*        longitude={Number(selectedCapital.long)}*/}
+                    {/*        latitude={Number(selectedCapital.lat)}*/}
+                    {/*    >*/}
+                    {/*    <div>capital</div>*/}
+                    {/*    </Popup>*/}
+                    {/*) : null}*/}
 
                 </ReactMapGL>
 
