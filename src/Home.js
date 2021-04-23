@@ -1,6 +1,8 @@
 import React, {useState} from "react"
 import ReactMapGL, {Marker, Popup} from 'react-map-gl';
 import * as stateCapitalData from './stateCapitals.json';
+import './index.css';
+import starIcon from './star-shape-in-a-circle.svg';
 // import {Pin} from "./Pin";
 
 export default function Home() {
@@ -38,7 +40,15 @@ export default function Home() {
                         longitude={Number(capital.long)}
                         latitude={Number(capital.lat)}
                         >
-                        <div>states</div>
+                        <button
+                            class="marker-btn"
+                            // onClick={e => {
+                            //     e.preventDefault();
+                            //     setSelectedCapital(capital);
+                            // }}
+                            >
+                            <img src={starIcon} alt="Capitals Icon"/>
+                        </button>
                     </Marker>
                     ))}
 
